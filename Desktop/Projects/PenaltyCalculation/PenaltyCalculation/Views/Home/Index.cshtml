@@ -1,0 +1,51 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+    Layout = "../Shared/_Layout.cshtml";
+}
+@model PenaltyCalculation.Models.InputModel
+@Html.ValidationSummary(false, "", new { @class = "text-danger" })
+<br />
+<form method="post">
+    <div class="row">
+        <div class="form-group">
+            <div class="col-md-3">
+                @Html.LabelFor(p => p.BookCheckOutDate)
+                @Html.TextBoxFor(x => x.BookCheckOutDate, new { @class = "form-control", @type = "date", @Value = @DateTime.Now.ToString("dd-MM-yyyy")})
+                
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-3">
+                @Html.LabelFor(p => p.BookCheckInDate)
+                @Html.TextBoxFor(x => x.BookCheckInDate, new { @class = "form-control", @type = "date", @Value = @DateTime.Now.ToString("dd-MM-yyyy")})
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-3">
+                @Html.LabelFor(p => p.Country)
+                @Html.DropDownListFor(p => p.Country.CountryId, (List<SelectListItem>)ViewBag.CountryDropDownItems, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-5">
+                <button type="submit" value="Calculate" class="btn btn-primary">Calculate</button>
+            </div>
+        </div>
+    </div>
+</form> 
+
+@if (ViewBag.ShowResult)
+{
+    <div class="row">
+        <div class="col-md-4">
+            <div class="alert alert-info" role="alert">
+                <p>Business Days : <span class="badge alert-success">@ViewBag.BusinessDays</span></p>
+                <p>Penalty Days : <span class="badge alert-success">@ViewBag.PenaltyDays</span></p>
+                <p>Penalty Price : <span class="badge alert-warning">@ViewBag.Penalty  @ViewBag.CurrencySymbol</span></p>
+            </div>
+        </div>
+    </div>
+}
